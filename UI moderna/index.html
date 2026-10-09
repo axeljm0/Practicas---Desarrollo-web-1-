@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RealPhone — Modern Monochrome Showcase</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <div class="ambient-glow ambient-glow-1"></div>
+    <div class="ambient-glow ambient-glow-2"></div>
+    <div class="grid-overlay"></div>
+
+    <header class="navbar">
+      <div class="logo">
+        <div class="logo-badge">
+          <span class="logo-icon">R</span>
+        </div>
+        <div class="logo-text">
+          <span class="brand-real">Real</span><span class="brand-phone">Phone</span>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#phone" class="nav-link">Phone</a>
+        <a href="#accessories" class="nav-link">Accessories</a>
+        <a href="#cart" class="nav-link">Cart <span class="cart-badge">0</span></a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="btn-preorder" type="button">Pre-Order</button>
+      </div>
+    </header>
+
+    <main class="showcase-stage">
+      <section class="phone-column" aria-label="Smartphone Mockup">
+        <div class="phone-wrapper">
+          <div class="phone-shadow"></div>
+          
+          <div class="phone-frame">
+            <div class="phone-antenna antenna-t-l"></div>
+            <div class="phone-antenna antenna-t-r"></div>
+            <div class="phone-antenna antenna-b-l"></div>
+            <div class="phone-antenna antenna-b-r"></div>
+            <div class="phone-button btn-volume-up"></div>
+            <div class="phone-button btn-volume-down"></div>
+            <div class="phone-button btn-power"></div>
+            <div class="phone-reflection"></div>
+
+            <div class="phone-screen-container">
+              <div class="phone-notch">
+                <span class="speaker-grill"></span>
+                <span class="camera-lens"></span>
+              </div>
+
+              <div class="screen-view screen-view-display active" id="screenDisplay">
+                <div class="screen-status-bar">
+                  <span class="status-time">10:00</span>
+                  <div class="status-icons">
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                      <path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L12 22l7.03-4.39C20.26 16.07 21 14.12 21 12c0-4.97-4.03-9-9-9z"/>
+                    </svg>
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor">
+                      <path d="M2 17h20v2H2zm1.15-4.05L4 11.47l.85 1.48 1.3-.75-.85-1.48H7v-1.5H5.3l.85-1.48-1.3-.75L4 8.53l-.85-1.48-1.3.75.85 1.48H1.4v1.5h1.3l-.85 1.48z"/>
+                    </svg>
+                    <div class="status-battery-icon">
+                      <div class="status-battery-fill"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="screen-clock-wrapper">
+                  <span class="clock-display">10:00</span>
+                  <span class="date-display">THURSDAY, AUGUST 21</span>
+                </div>
+
+                <div class="screen-artwork">
+                  <div class="concentric-ring ring-1"></div>
+                  <div class="concentric-ring ring-2"></div>
+                  <div class="concentric-ring ring-3"></div>
+                  <div class="concentric-ring ring-4"></div>
+                  <div class="center-orb"></div>
+                </div>
+
+                <div class="screen-bottom-nav">
+                  <div class="fingerprint-sensor">
+                    <span class="fp-inner"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="screen-view screen-view-battery" id="screenBattery">
+                <div class="screen-status-bar">
+                  <span class="status-time">10:00</span>
+                  <div class="status-icons">
+                    <span class="charging-text">FAST CHARGE</span>
+                  </div>
+                </div>
+
+                <div class="battery-hud">
+                  <div class="battery-dial-container">
+                    <svg class="battery-dial-svg" viewBox="0 0 140 140">
+                      <circle class="dial-track" cx="70" cy="70" r="58"></circle>
+                      <circle class="dial-progress" cx="70" cy="70" r="58"></circle>
+                    </svg>
+                    <div class="battery-percentage-content">
+                      <span class="battery-pct-val">98%</span>
+                      <span class="battery-pct-label">CHARGED</span>
+                    </div>
+                  </div>
+
+                  <div class="battery-meta-tag">
+                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+                      <path d="M11 21h-1l1-7H7.5c-.58 0-.57-.32-.38-.66.19-.34.05-.08.08-.14 1.83-3.23 4.19-7.39 6.8-12.2h1l-1 7h3.5c.41 0 .63.28.48.66l-.08.15-6.9 7.19z"/>
+                    </svg>
+                    <span>100W HYPERCHARGE</span>
+                  </div>
+                  <div class="battery-remaining">48h 30m Remaining</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="spotlight-beam" id="spotlightBeam">
+        <div class="beam-gradient-fill"></div>
+        <div class="beam-scanlines"></div>
+        <div class="beam-edge edge-top"></div>
+        <div class="beam-edge edge-bottom"></div>
+      </div>
+
+      <section class="feature-showcase-zone" aria-live="polite">
+        <div class="feature-slider-viewport">
+          <div class="feature-item" id="featureItem">
+            <div class="feature-icon-wrapper" id="featureIconWrapper"></div>
+
+            <div class="feature-text-block">
+              <h2 class="feature-title" id="featureTitle">Display</h2>
+              <p class="feature-subtitle" id="featureSubtitle">6.5" Mini-Drop Fullscreen</p>
+              <div class="feature-specs-pills" id="featurePills">
+                <span class="spec-pill">120Hz LTPO</span>
+                <span class="spec-pill">3000 nits</span>
+                <span class="spec-pill">OLED Pro</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="features-controller" aria-label="Feature Switcher">
+        <div class="controller-wrapper">
+          <button 
+            type="button" 
+            class="arrow-btn arrow-up" 
+            id="btnArrowUp" 
+            aria-label="Siguiente característica (desplazar hacia arriba)"
+            title="Siguiente característica (Flecha Arriba)"
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+          </button>
+
+          <div class="features-label-wrapper">
+            <span class="features-label">Features</span>
+            <span class="feature-index" id="featureIndex">01 / 02</span>
+          </div>
+
+          <button 
+            type="button" 
+            class="arrow-btn arrow-down" 
+            id="btnArrowDown" 
+            aria-label="Característica anterior (desplazar hacia abajo)"
+            title="Característica anterior (Flecha Abajo)"
+          >
+            <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+        </div>
+
+        <div class="controller-dots">
+          <button type="button" class="dot-btn active" data-index="0" aria-label="Ver Display"></button>
+          <button type="button" class="dot-btn" data-index="1" aria-label="Ver Battery Life"></button>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="footer-bar">
+      <div class="footer-left">
+        <span class="series-tag">SERIES 01 // MONOLITH EDITION</span>
+      </div>
+      <div class="footer-center">
+        <span class="scroll-hint">Usa las flechas <strong>^</strong> o <strong>v</strong> del panel o tu teclado</span>
+      </div>
+      <div class="footer-right">
+        <span class="year-stamp">DESIGN LAB © 2026</span>
+      </div>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

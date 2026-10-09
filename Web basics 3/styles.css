@@ -1,0 +1,167 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f4f4;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* ========== CONTENEDORES CENTRADOS ========== */
+#cabeceralogo > div,
+#menuprincipal > div,
+main > div {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ========== CABECERA ========== */
+#cabeceralogo {
+    background: #2c3e50;
+    color: #fff;
+    padding: 30px 0;
+}
+
+#cabeceralogo h1 {
+    font-size: 2em;
+    text-align: center;
+}
+
+/* ========== MENÚ ========== */
+#menuprincipal {
+    background: #34495e;
+}
+
+#menuprincipal ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+#menuprincipal li a {
+    display: block;
+    padding: 15px 25px;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+#menuprincipal li a:hover {
+    background: #1abc9c;
+}
+
+/* ========== CONTENIDO PRINCIPAL ========== */
+main {
+    background: #fff;
+    padding: 30px 0;
+    overflow: hidden;
+}
+
+/* Contenedor flexible de dos columnas */
+main > div {
+    display: flex;
+    align-items: stretch;   /* el aside se estira hasta el fondo */
+    gap: 20px;
+}
+
+#articulosprincipales {
+    flex: 1 1 65%;
+}
+
+#infoadicional {
+    flex: 1 1 30%;
+    background: #ecf0f1;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.recuperar {
+    display: none;
+}
+
+/* ========== ARTÍCULOS ========== */
+article {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+article h1 {
+    font-size: 1.5em;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+article time {
+    display: block;
+    margin-bottom: 10px;
+    color: #7f8c8d;
+}
+
+.numerodia {
+    font-size: 2em;
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+.nombredia {
+    font-size: 0.9em;
+    text-transform: uppercase;
+}
+
+article figure img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-top: 10px;
+    background: #ccc;
+    min-height: 150px;
+}
+
+/* =====================================================
+   LISTADO 4-56 / 4-57: PIE DE PÁGINA FLEXIBLE
+   ===================================================== */
+#pielogo {
+    display: flex;
+    justify-content: center;
+    width: 96%;
+    padding: 2%;
+    background-color: #0F76A0;
+}
+
+#pielogo > div {
+    display: flex;
+    flex: 1;
+    max-width: 960px;
+    background-color: #9FC8D9;
+    border-radius: 10px;
+}
+
+.seccionpie {
+    flex: 1;
+    padding: 25px;
+}
+
+.seccionpie h1 {
+    font: bold 20px Arial, sans-serif;
+}
+
+.seccionpie p {
+    margin-top: 5px;
+}
+
+.seccionpie a {
+    font: bold 16px Arial, sans-serif;
+    color: #666666;
+    text-decoration: none;
+}
+
+.seccionpie a:hover {
+    color: #0F76A0;
+    text-decoration: underline;
+}
