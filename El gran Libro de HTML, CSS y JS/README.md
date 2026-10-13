@@ -145,7 +145,3 @@ Todos los archivos han sido construidos respetando los estándares de la industr
 - **Documentación Exhaustiva:** Cada carpeta contiene su propio `README.md` con objetivos formativos, código clave comentado y retos adicionales para incentivar la práctica independiente.
 
 ---
-
-## 📜 Licencia
-
-Este material se distribuye bajo la licencia **MIT**, permitiendo su uso libre tanto para fines educativos como personales y profesionales.
