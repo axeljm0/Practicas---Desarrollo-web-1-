@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>04 - Funciones Anónimas en JavaScript</title>
+  <style>
+    :root {
+      --primary: #0284c7;
+      --primary-hover: #0369a1;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --badge-bg: #e0f2fe;
+      --badge-text: #0369a1;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 640px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+      padding: 2rem;
+    }
+
+    header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    p.description {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .theory-box {
+      background: #f0fdf4;
+      border-left: 4px solid #16a34a;
+      padding: 0.85rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      color: #166534;
+    }
+
+    .theory-box code {
+      background: rgba(255,255,255,0.7);
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .calc-section {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    input[type="number"] {
+      flex: 1;
+      min-width: 180px;
+      padding: 0.75rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="number"]:focus {
+      border-color: var(--primary);
+    }
+
+    button {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .display-card {
+      background-color: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .card-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.35rem;
+    }
+
+    .card-number {
+      font-size: 2.25rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .card-detail {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    .array-demo-card {
+      background-color: #f1f5f9;
+      border-radius: 8px;
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+    }
+
+    .array-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .chips-container {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.75rem;
+    }
+
+    .chip {
+      background-color: #ffffff;
+      border: 1px solid var(--border);
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    }
+
+    .chip.highlight {
+      background-color: #0284c7;
+      color: #ffffff;
+      border-color: #0284c7;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Contenedor principal del ejercicio -->
+  <main class="container">
+    <header>
+      <span class="badge">Módulo 6.2 · Funciones</span>
+      <h1>Ejercicio 04: Funciones Anónimas</h1>
+      <p class="description">
+        Expresiones de función (Function Expressions) y asignación a variables con <code>const elevarAlCuadrado = function(numero) { ... }</code>.
+      </p>
+    </header>
+
+    <!-- Explicación conceptual integrada -->
+    <section class="theory-box">
+      <strong>Concepto clave:</strong> Una función anónima no tiene nombre propio. Se almacena en una variable o se pasa como argumento (*callback*), tratando a las funciones como valores de primera clase.
+    </section>
+
+    <!-- Calculadora interactiva individual -->
+    <section class="calc-section">
+      <input type="number" id="inputNumero" placeholder="Ingresa un número (ej: 7)" value="9" step="any" />
+      <button id="btnCalcular" type="button">Calcular Cuadrado</button>
+    </section>
+
+    <!-- Visualización del cálculo individual -->
+    <section class="display-card" aria-live="polite">
+      <div class="card-title">Resultado de elevarAlCuadrado()</div>
+      <div class="card-number" id="resultadoCuadrado">81</div>
+      <div class="card-detail" id="detalleOperacion">9² = 9 × 9 = 81</div>
+    </section>
+
+    <!-- Demostración adicional de función anónima como Callback -->
+    <section class="array-demo-card">
+      <div class="array-title">Demostración: Función anónima como Callback en un Array</div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+        Array original:
+      </p>
+      <div class="chips-container" id="contenedorOriginal">
+        <!-- Renderizado dinámico -->
+      </div>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+        Array transformado con <code>.map(function(n) { return elevarAlCuadrado(n); })</code>:
+      </p>
+      <div class="chips-container" id="contenedorTransformado">
+        <!-- Renderizado dinámico -->
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

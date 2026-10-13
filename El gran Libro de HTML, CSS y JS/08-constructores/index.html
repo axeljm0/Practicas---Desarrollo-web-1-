@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>08 - Constructores y el Operador 'new' en JavaScript</title>
+  <style>
+    :root {
+      --primary: #be185d;
+      --primary-hover: #9d174d;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --badge-bg: #fce7f3;
+      --badge-text: #9d174d;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+      padding: 2rem;
+    }
+
+    header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    p.description {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .form-container {
+      background: #fdf2f8;
+      border: 1px solid #fbcfe8;
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #9d174d;
+      margin-bottom: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 2fr auto;
+      gap: 0.5rem;
+      align-items: end;
+    }
+
+    @media (max-width: 580px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    input {
+      padding: 0.6rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: var(--primary);
+    }
+
+    button {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.65rem 1rem;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .instances-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .person-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--primary);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      transition: transform 0.15s ease;
+    }
+
+    .person-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .person-header {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .person-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .btn-saludar-card {
+      background: #fdf2f8;
+      color: #9d174d;
+      border: 1px solid #fbcfe8;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+    }
+
+    .btn-saludar-card:hover {
+      background: #fce7f3;
+    }
+
+    .theory-note {
+      background: #f1f5f9;
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Contenedor principal -->
+  <main class="container">
+    <header>
+      <span class="badge">Módulo 6.3 · Objetos</span>
+      <h1>Ejercicio 08: Funciones Constructoras y 'new'</h1>
+      <p class="description">
+        Creación de un molde constructor <code>Persona(nombre, edad, profesion)</code> e instanciación de 3 objetos independientes compartiendo métodos prototípicos.
+      </p>
+    </header>
+
+    <!-- Formulario para agregar nuevas instancias dinámicamente -->
+    <section class="form-container">
+      <div class="form-title">Crear Nueva Instancia con 'new Persona()'</div>
+      <form id="formNuevaPersona" class="form-row">
+        <div class="form-group">
+          <label for="inputNombre">Nombre</label>
+          <input type="text" id="inputNombre" placeholder="Ej: Diana Prince" required />
+        </div>
+        <div class="form-group">
+          <label for="inputEdad">Edad</label>
+          <input type="number" id="inputEdad" placeholder="29" min="1" max="120" required />
+        </div>
+        <div class="form-group">
+          <label for="inputProfesion">Profesión</label>
+          <input type="text" id="inputProfesion" placeholder="Data Scientist" required />
+        </div>
+        <button type="submit">Instanciar</button>
+      </form>
+    </section>
+
+    <!-- Grid donde se listan las 3 instancias iniciales y las nuevas -->
+    <section>
+      <div style="font-size: 0.9rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem;">
+        Instancias Activas en Memoria
+      </div>
+      <div id="contenedorInstancias" class="instances-grid">
+        <!-- Renderizado dinámico de tarjetas -->
+      </div>
+    </section>
+
+    <!-- Resumen pedagógico -->
+    <footer class="theory-note">
+      <strong>Mecánica del operador <code>new</code>:</strong> (1) Crea un objeto vacío en blanco <code>{}</code>; (2) Asigna su prototipo a <code>Persona.prototype</code>; (3) Enlaza <code>this</code> a dicho objeto; (4) Ejecuta el cuerpo del constructor y retorna el objeto creado.
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

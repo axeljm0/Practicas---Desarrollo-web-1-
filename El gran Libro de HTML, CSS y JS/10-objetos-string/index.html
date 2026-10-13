@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>10 - Objeto Estándar String en JavaScript</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --badge-bg: #dbeafe;
+      --badge-text: #1e40af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+      padding: 2rem;
+    }
+
+    header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    p.description {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .string-banner {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .string-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .string-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1e40af;
+      margin-top: 0.25rem;
+      font-family: monospace;
+    }
+
+    .operations-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .op-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    @media (max-width: 540px) {
+      .op-card {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .op-meta {
+      font-size: 0.85rem;
+    }
+
+    .op-name {
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .op-snippet {
+      font-family: monospace;
+      color: #2563eb;
+      background: #eff6ff;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+    }
+
+    .op-result {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #0f172a;
+      overflow-x: auto;
+    }
+
+    .action-controls {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--primary);
+    }
+
+    button {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Contenedor principal -->
+  <main class="container">
+    <header>
+      <span class="badge">Módulo 6.4 · Objetos Estándar</span>
+      <h1>Ejercicio 10: Objeto Estándar String</h1>
+      <p class="description">
+        5 operaciones esenciales del objeto estándar <code>String</code> en JavaScript aplicadas sobre la cadena de texto <code>"JavaScript es genial"</code>.
+      </p>
+    </header>
+
+    <!-- Visualizador de la cadena en estudio -->
+    <section class="string-banner">
+      <div class="string-label">Cadena de Texto en Evaluación</div>
+      <div class="string-value" id="dispCadena">"JavaScript es genial"</div>
+    </section>
+
+    <!-- Controles para probar una cadena personalizada opcional -->
+    <section class="action-controls" style="margin-bottom: 1.5rem;">
+      <input type="text" id="inputCustomTexto" value="JavaScript es genial" placeholder="Escribe otra frase para analizar..." />
+      <button id="btnProcesar" type="button">Analizar Cadena</button>
+    </section>
+
+    <!-- Lista de las 5 operaciones sobre el objeto String -->
+    <section class="operations-list">
+      <!-- 1. Longitud -->
+      <article class="op-card">
+        <div class="op-meta">
+          <div class="op-name">1. Longitud de caracteres</div>
+          <span class="op-snippet">texto.length</span>
+        </div>
+        <div class="op-result" id="resLongitud">20 caracteres</div>
+      </article>
+
+      <!-- 2. Mayúsculas y Minúsculas -->
+      <article class="op-card">
+        <div class="op-meta">
+          <div class="op-name">2. Mayúsculas y Minúsculas</div>
+          <span class="op-snippet">toUpperCase() / toLowerCase()</span>
+        </div>
+        <div class="op-result" id="resMayusMinus">...</div>
+      </article>
+
+      <!-- 3. Inclusión y Búsqueda -->
+      <article class="op-card">
+        <div class="op-meta">
+          <div class="op-name">3. Búsqueda e Inclusión</div>
+          <span class="op-snippet">includes("genial") / indexOf()</span>
+        </div>
+        <div class="op-result" id="resBusqueda">...</div>
+      </article>
+
+      <!-- 4. Extracción y Reemplazo -->
+      <article class="op-card">
+        <div class="op-meta">
+          <div class="op-name">4. Extracción y Reemplazo</div>
+          <span class="op-snippet">slice(0, 10) / replace()</span>
+        </div>
+        <div class="op-result" id="resExtraccion">...</div>
+      </article>
+
+      <!-- 5. Segmentación / División en Array -->
+      <article class="op-card">
+        <div class="op-meta">
+          <div class="op-name">5. División en Palabras</div>
+          <span class="op-snippet">split(" ")</span>
+        </div>
+        <div class="op-result" id="resSplit">...</div>
+      </article>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

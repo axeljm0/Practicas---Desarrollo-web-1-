@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>02 - Funciones con Retorno en JavaScript</title>
+  <style>
+    :root {
+      --primary: #059669;
+      --primary-hover: #047857;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --badge-bg: #d1fae5;
+      --badge-text: #065f46;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+      padding: 2rem;
+    }
+
+    header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    p.description {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    @media (max-width: 480px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    input[type="number"] {
+      padding: 0.65rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="number"]:focus {
+      border-color: var(--primary);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    button {
+      flex: 1;
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .result-box {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .result-label {
+      font-size: 0.85rem;
+      color: #047857;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.35rem;
+    }
+
+    .result-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #065f46;
+    }
+
+    .result-formula {
+      font-size: 0.9rem;
+      color: #047857;
+      margin-top: 0.35rem;
+    }
+
+    .history-container {
+      background-color: #f1f5f9;
+      border-radius: 8px;
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+    }
+
+    .history-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .history-item {
+      background-color: #ffffff;
+      border-left: 4px solid var(--primary);
+      padding: 0.65rem 1rem;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .history-item:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Contenedor principal del ejercicio -->
+  <main class="container">
+    <header>
+      <span class="badge">Módulo 6.2 · Funciones</span>
+      <h1>Ejercicio 02: Funciones con Retorno</h1>
+      <p class="description">
+        Uso de la sentencia <code>return</code> para devolver un valor calculado y reutilizar el resultado en otras partes del programa con <code>calcularAreaRectangulo(base, altura)</code>.
+      </p>
+    </header>
+
+    <!-- Formulario de entrada para base y altura -->
+    <section>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="inputBase">Base del rectángulo (cm)</label>
+          <input type="number" id="inputBase" placeholder="Ej: 10" min="0.1" step="any" value="12" />
+        </div>
+        <div class="form-group">
+          <label for="inputAltura">Altura del rectángulo (cm)</label>
+          <input type="number" id="inputAltura" placeholder="Ej: 5" min="0.1" step="any" value="6" />
+        </div>
+      </div>
+      <div class="button-group">
+        <button id="btnCalcular" type="button">Calcular Área</button>
+      </div>
+    </section>
+
+    <!-- Visualización destacada del último resultado calculado -->
+    <section class="result-box" aria-live="polite">
+      <div class="result-label">Área Calculada</div>
+      <div class="result-value" id="valorArea">72 cm²</div>
+      <div class="result-formula" id="formulaExplicada">Fórmula: 12 × 6 = 72 cm²</div>
+    </section>
+
+    <!-- Historial de cálculos previos -->
+    <section class="history-container">
+      <div class="history-title">Historial de Cálculos Realizados</div>
+      <div id="listaHistorial">
+        <!-- Elementos del historial insertados dinámicamente -->
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

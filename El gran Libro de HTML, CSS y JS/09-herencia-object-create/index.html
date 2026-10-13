@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>09 - Herencia Prototípica con Object.create() en JavaScript</title>
+  <style>
+    :root {
+      --primary: #0891b2;
+      --primary-hover: #0e7490;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --badge-bg: #cffafe;
+      --badge-text: #155e75;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+      padding: 2rem;
+    }
+
+    header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    p.description {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .chain-diagram {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .proto-box {
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      background: #f8fafc;
+      position: relative;
+    }
+
+    .proto-box.base {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .proto-box.derived {
+      border-color: #0891b2;
+      background: #ecfeff;
+    }
+
+    .box-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 0.5rem;
+    }
+
+    .tag-base {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .tag-derived {
+      background: #cffafe;
+      color: #155e75;
+    }
+
+    .proto-arrow {
+      text-align: center;
+      color: #0891b2;
+      font-weight: bold;
+      font-size: 1.25rem;
+    }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+      .button-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    button {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .output-panel {
+      background-color: #0f172a;
+      border-radius: 8px;
+      padding: 1.25rem;
+      color: #f8fafc;
+      font-family: monospace;
+      font-size: 0.85rem;
+      min-height: 120px;
+      line-height: 1.5;
+    }
+
+    .output-title {
+      color: #94a3b8;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Contenedor principal -->
+  <main class="container">
+    <header>
+      <span class="badge">Módulo 6.3 · Objetos</span>
+      <h1>Ejercicio 09: Herencia con Object.create()</h1>
+      <p class="description">
+        Mecanismo nativo de herencia prototípica en JavaScript vinculando un prototipo base <code>animal</code> a un objeto derivado <code>perro</code> mediante <code>Object.create()</code>.
+      </p>
+    </header>
+
+    <!-- Diagrama visual de la cadena prototípica -->
+    <section class="chain-diagram">
+      <!-- Objeto Prototipo Base -->
+      <div class="proto-box base">
+        <span class="box-tag tag-base">Objeto Prototipo: animal</span>
+        <div><strong>Métodos compartidos:</strong> <code>hacerSonido()</code>, <code>dormir()</code></div>
+        <div><strong>Propiedad compartida:</strong> <code>esSerVivo = true</code></div>
+      </div>
+
+      <div class="proto-arrow">
+        ▲ hereda vía Object.create(animal)
+      </div>
+
+      <!-- Objeto Derivado -->
+      <div class="proto-box derived">
+        <span class="box-tag tag-derived">Objeto Derivado: perro</span>
+        <div><strong>Propiedades propias:</strong> <code>nombre = "Firulais"</code>, <code>raza = "Golden Retriever"</code></div>
+        <div><strong>Método propio:</strong> <code>ladrar()</code> | <strong>Sobrescritura:</strong> <code>hacerSonido()</code></div>
+      </div>
+    </section>
+
+    <!-- Botones interactivos para probar la cadena prototípica -->
+    <section class="button-grid">
+      <button id="btnLadrar" type="button">
+        1. Ejecutar perro.ladrar() (Método propio)
+      </button>
+      <button id="btnDormir" type="button">
+        2. Ejecutar perro.dormir() (Heredado de animal)
+      </button>
+      <button id="btnSonido" type="button">
+        3. Ejecutar perro.hacerSonido() (Sobrescrito)
+      </button>
+      <button id="btnInspeccionar" type="button">
+        4. Inspeccionar Cadena Prototípica
+      </button>
+    </section>
+
+    <!-- Terminal de resultados en pantalla -->
+    <section class="output-panel">
+      <div class="output-title">Salida de Ejecución y Diagnóstico de Prototipos</div>
+      <div id="pantallaSalida">
+        Haz clic en cualquiera de los botones para interactuar con el objeto perro y su prototipo.
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

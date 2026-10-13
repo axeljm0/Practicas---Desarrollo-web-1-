@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>03 - Ámbito de Variables en JavaScript</title>
+  <style>
+    :root {
+      --primary: #7c3aed;
+      --primary-hover: #6d28d9;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --badge-bg: #ede9fe;
+      --badge-text: #5b21b6;
+      --global-color: #2563eb;
+      --local-color: #ea580c;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+      padding: 2rem;
+    }
+
+    header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    p.description {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .scope-diagram {
+      border: 2px dashed var(--global-color);
+      border-radius: 10px;
+      padding: 1.25rem;
+      background-color: #eff6ff;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .scope-diagram::before {
+      content: "ÁMBITO GLOBAL (window / script)";
+      position: absolute;
+      top: -10px;
+      left: 15px;
+      background-color: var(--global-color);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .inner-scope {
+      border: 2px solid var(--local-color);
+      border-radius: 8px;
+      padding: 1rem;
+      background-color: #fff7ed;
+      margin-top: 1rem;
+      position: relative;
+    }
+
+    .inner-scope::before {
+      content: "ÁMBITO LOCAL (función interna)";
+      position: absolute;
+      top: -10px;
+      left: 15px;
+      background-color: var(--local-color);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      letter-spacing: 0.05em;
+    }
+
+    .code-pill {
+      font-family: monospace;
+      font-size: 0.85rem;
+      background: #ffffff;
+      padding: 0.35rem 0.6rem;
+      border-radius: 4px;
+      display: inline-block;
+      margin: 0.25rem 0;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 540px) {
+      .button-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    button {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+      text-align: left;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .log-container {
+      background-color: #0f172a;
+      border-radius: 8px;
+      padding: 1.25rem;
+      color: #f8fafc;
+      font-family: monospace;
+      font-size: 0.85rem;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    .log-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #334155;
+    }
+
+    .log-title {
+      color: #94a3b8;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-clear {
+      background: #334155;
+      color: #cbd5e1;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-clear:hover {
+      background: #475569;
+    }
+
+    .log-entry {
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+      padding-left: 0.75rem;
+      border-left: 3px solid #38bdf8;
+    }
+
+    .log-entry.error {
+      border-left-color: #ef4444;
+      color: #fca5a5;
+    }
+
+    .log-entry.success {
+      border-left-color: #10b981;
+      color: #86efac;
+    }
+
+    .log-entry.warning {
+      border-left-color: #f59e0b;
+      color: #fde68a;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Contenedor principal -->
+  <main class="container">
+    <header>
+      <span class="badge">Módulo 6.2 · Funciones</span>
+      <h1>Ejercicio 03: Ámbito de Variables</h1>
+      <p class="description">
+        Exploración visual e interactiva del ámbito global vs. ámbito local, encapsulación dentro de funciones y manejo de errores de referencia (<code>ReferenceError</code>).
+      </p>
+    </header>
+
+    <!-- Representación visual del anidamiento de ámbitos -->
+    <section class="scope-diagram">
+      <p>Variable en Ámbito Global:</p>
+      <span class="code-pill">let mensajeGlobal = "Soy visible en todo el script";</span>
+
+      <div class="inner-scope">
+        <p>Variables en Ámbito Local (dentro de <code>demostrarAmbito()</code>):</p>
+        <span class="code-pill">let mensajeLocal = "Solo existo dentro de esta función";</span>
+      </div>
+    </section>
+
+    <!-- Botones de pruebas pedagógicas -->
+    <section class="button-grid">
+      <button id="btnProbarGlobal" type="button">
+        1. Acceder a variable global
+      </button>
+      <button id="btnProbarLocalDentro" type="button">
+        2. Acceder a variable local desde dentro
+      </button>
+      <button id="btnProbarLocalFuera" type="button">
+        3. Intentar acceder a variable local desde fuera
+      </button>
+      <button id="btnProbarSombreado" type="button">
+        4. Demostrar sombreado (Shadowing)
+      </button>
+    </section>
+
+    <!-- Consola interactiva en pantalla -->
+    <section class="log-container">
+      <div class="log-header">
+        <span class="log-title">Consola de Resultados en Pantalla</span>
+        <button id="btnLimpiarLogs" class="btn-clear" type="button">Limpiar</button>
+      </div>
+      <div id="pantallaConsola">
+        <!-- Salidas generadas dinámicamente -->
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

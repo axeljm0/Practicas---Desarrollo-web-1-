@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>01 - Funciones Básicas en JavaScript</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --badge-bg: #dbeafe;
+      --badge-text: #1e40af;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+      padding: 2rem;
+    }
+
+    header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    p.description {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .interactive-section {
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      min-width: 200px;
+      padding: 0.65rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: var(--primary);
+    }
+
+    button {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.65rem 1.25rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background-color: #1d4ed8;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .results-container {
+      background-color: #f1f5f9;
+      border-radius: 8px;
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+    }
+
+    .results-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+
+    .greeting-card {
+      background-color: #ffffff;
+      border-left: 4px solid var(--primary);
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    .greeting-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .greeting-index {
+      font-weight: bold;
+      color: var(--primary);
+      font-size: 0.85rem;
+    }
+
+    .greeting-text {
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Contenedor principal de la aplicación -->
+  <main class="container">
+    <!-- Encabezado con información del módulo y tema -->
+    <header>
+      <span class="badge">Módulo 6.2 · Funciones</span>
+      <h1>Ejercicio 01: Funciones Básicas</h1>
+      <p class="description">
+        Demostración de declaración de funciones, paso de parámetros y llamadas repetidas invocando <code>saludar(nombre)</code>.
+      </p>
+    </header>
+
+    <!-- Sección interactiva para agregar saludos personalizados -->
+    <section class="interactive-section">
+      <input type="text" id="inputNombre" placeholder="Ingresa un nuevo nombre..." />
+      <button id="btnSaludar" type="button">Saludar</button>
+    </section>
+
+    <!-- Contenedor donde se renderizan los saludos generados por JavaScript -->
+    <section class="results-container">
+      <div class="results-title">Registro de Saludos en Pantalla</div>
+      <div id="contenedorSaludos">
+        <!-- Los saludos generados dinámicamente aparecerán aquí -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Enlace al archivo de script externo -->
+  <script src="script.js"></script>
+</body>
+</html>

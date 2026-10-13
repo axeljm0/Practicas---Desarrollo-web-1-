@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>12 - Objeto Estándar Date en JavaScript</title>
+  <style>
+    :root {
+      --primary: #9333ea;
+      --primary-hover: #7e22ce;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --badge-bg: #f3e8ff;
+      --badge-text: #6b21a8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 680px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+      padding: 2rem;
+    }
+
+    header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    p.description {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .date-input-section {
+      background: #faf5ff;
+      border: 1px solid #e9d5ff;
+      border-radius: 10px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #6b21a8;
+    }
+
+    input[type="date"] {
+      padding: 0.6rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      outline: none;
+      color: var(--text);
+    }
+
+    input[type="date"]:focus {
+      border-color: var(--primary);
+    }
+
+    button {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.65rem 1.25rem;
+      border-radius: 6px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .summary-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+      .summary-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .stat-card {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-top: 0.25rem;
+    }
+
+    .getters-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .getter-item {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .getter-code {
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    .getter-val {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 0.25rem;
+    }
+
+    .tip-box {
+      background: #fffbeb;
+      border-left: 4px solid #f59e0b;
+      padding: 0.85rem 1rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: #78350f;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Contenedor principal -->
+  <main class="container">
+    <header>
+      <span class="badge">Módulo 6.4 · Objetos Estándar</span>
+      <h1>Ejercicio 12: Objeto Estándar Date</h1>
+      <p class="description">
+        Manejo de fechas temporales mediante <code>new Date()</code>, extracción de componentes temporales (<code>getFullYear</code>, <code>getMonth</code>, etc.) y cálculo de edad y días faltantes.
+      </p>
+    </header>
+
+    <!-- Selector de fecha de cumpleaños -->
+    <section class="date-input-section">
+      <label for="inputCumple">Selecciona fecha de nacimiento:</label>
+      <input type="date" id="inputCumple" value="1995-05-15" />
+      <button id="btnCalcularFecha" type="button">Procesar Fecha</button>
+    </section>
+
+    <!-- Tarjetas de métricas calculadas -->
+    <section class="summary-cards">
+      <div class="stat-card">
+        <div class="stat-label">Edad Actual Calculada</div>
+        <div class="stat-number" id="dispEdad">-- años</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Días para el Próximo Cumpleaños</div>
+        <div class="stat-number" id="dispDiasRestantes" style="color: #059669;">-- días</div>
+      </div>
+    </section>
+
+    <!-- Desglose de los métodos Getters del objeto Date -->
+    <section>
+      <div style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem;">
+        Desglose de Getters de Date
+      </div>
+      <div class="getters-grid">
+        <div class="getter-item">
+          <div class="getter-code">.getFullYear()</div>
+          <div class="getter-val" id="getAnio">--</div>
+        </div>
+        <div class="getter-item">
+          <div class="getter-code">.getMonth() (0-11)</div>
+          <div class="getter-val" id="getMes">--</div>
+        </div>
+        <div class="getter-item">
+          <div class="getter-code">.getDate() (1-31)</div>
+          <div class="getter-val" id="getDiaMes">--</div>
+        </div>
+        <div class="getter-item">
+          <div class="getter-code">.getDay() (0-6)</div>
+          <div class="getter-val" id="getDiaSemana">--</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nota didáctica sobre el desfase de meses -->
+    <footer class="tip-box">
+      <strong>¡Ojo con getMonth() en JavaScript!:</strong> Los meses en el objeto Date tienen índice base cero (0 = Enero, 1 = Febrero ... 11 = Diciembre). Por ello, para mostrar el mes a un usuario humano siempre se debe sumar <code>+ 1</code>.
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

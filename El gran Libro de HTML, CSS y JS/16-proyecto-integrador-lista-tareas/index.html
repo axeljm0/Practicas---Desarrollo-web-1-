@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>16 - Proyecto Integrador: Lista de Tareas (To-Do List)</title>
+  <!-- Enlace a la hoja de estilos externa requerida -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Contenedor principal de la aplicación To-Do -->
+  <main class="todo-app">
+    <!-- Encabezado con información del proyecto integrador -->
+    <header>
+      <span class="badge">Proyecto Integrador Final</span>
+      <h1>Gestor de Tareas</h1>
+      <p class="subtitle">
+        Integración completa de Funciones, Objetos, Arreglos, DOM, Eventos y Almacenamiento Local.
+      </p>
+    </header>
+
+    <!-- Formulario para agregar nuevas tareas -->
+    <section>
+      <form id="formNuevaTarea" class="input-section">
+        <input 
+          type="text" 
+          id="inputTarea" 
+          class="task-input" 
+          placeholder="¿Qué necesitas hacer hoy? (ej: Estudiar funciones flecha)" 
+          autocomplete="off"
+          required 
+        />
+        <button type="submit" id="btnAgregar" class="btn-add">＋ Agregar</button>
+      </form>
+    </section>
+
+    <!-- Barra de filtros y contadores reactivos -->
+    <section class="filter-bar">
+      <div class="filters-group" role="tablist">
+        <button type="button" class="btn-filter active" data-filtro="todas">Todas</button>
+        <button type="button" class="btn-filter" data-filtro="pendientes">Pendientes</button>
+        <button type="button" class="btn-filter" data-filtro="completadas">Completadas</button>
+      </div>
+      <div id="contadorPendientes" class="counter-badge">
+        0 tareas pendientes
+      </div>
+    </section>
+
+    <!-- Lista dinámica de tareas renderizada por JavaScript -->
+    <section>
+      <ul id="listaTareas" class="tasks-list" aria-live="polite">
+        <!-- Los elementos <li> se inyectarán dinámicamente aquí -->
+      </ul>
+    </section>
+
+    <!-- Pie de acciones adicionales (limpiar completadas y estado de guardado) -->
+    <footer class="app-footer">
+      <div class="storage-notice">
+        <span>💾</span> Sincronizado en LocalStorage
+      </div>
+      <button type="button" id="btnLimpiarCompletadas" class="btn-clear-completed">
+        Borrar tareas completadas
+      </button>
+    </footer>
+  </main>
+
+  <!-- Enlace al archivo de script externo -->
+  <script src="script.js"></script>
+</body>
+</html>

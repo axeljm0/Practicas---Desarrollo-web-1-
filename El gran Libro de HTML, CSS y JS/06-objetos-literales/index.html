@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>06 - Objetos Literales en JavaScript</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-hover: #4338ca;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --badge-bg: #e0e7ff;
+      --badge-text: #3730a3;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 640px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+      padding: 2rem;
+    }
+
+    header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    p.description {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .book-card {
+      display: flex;
+      gap: 1.5rem;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      align-items: center;
+    }
+
+    @media (max-width: 500px) {
+      .book-card {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    .book-cover {
+      width: 110px;
+      height: 150px;
+      background: linear-gradient(135deg, #4f46e5 0%, #312e81 100%);
+      border-radius: 6px;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0.75rem;
+      box-shadow: 3px 3px 8px rgba(0,0,0,0.2);
+      flex-shrink: 0;
+      text-align: center;
+    }
+
+    .book-cover span {
+      font-size: 0.75rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .book-info {
+      flex: 1;
+    }
+
+    .book-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.25rem;
+    }
+
+    .book-author {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    .properties-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+    }
+
+    .property-pill {
+      background: #ffffff;
+      padding: 0.4rem 0.6rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+
+    .available {
+      background-color: #dcfce7;
+      color: #15803d;
+    }
+
+    .borrowed {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+
+    .actions-bar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.65rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .code-inspector {
+      background: #0f172a;
+      border-radius: 8px;
+      padding: 1.25rem;
+      color: #f8fafc;
+      font-family: monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .inspector-title {
+      color: #94a3b8;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Contenedor principal -->
+  <main class="container">
+    <header>
+      <span class="badge">Módulo 6.3 · Objetos</span>
+      <h1>Ejercicio 06: Objetos Literales</h1>
+      <p class="description">
+        Modelado de datos en JavaScript mediante un objeto literal <code>libro</code> con pares clave-valor, tipos de datos mixtos y acceso dinámico a propiedades.
+      </p>
+    </header>
+
+    <!-- Ficha gráfica del libro -->
+    <section class="book-card">
+      <div class="book-cover">
+        <span>📖 LIBRO</span>
+      </div>
+      <div class="book-info">
+        <h2 class="book-title" id="dispTitulo">Cien años de soledad</h2>
+        <div class="book-author" id="dispAutor">Por Gabriel García Márquez</div>
+
+        <div class="properties-grid">
+          <div class="property-pill">
+            <strong>Año:</strong> <span id="dispAnio">1967</span>
+          </div>
+          <div class="property-pill">
+            <strong>Páginas:</strong> <span id="dispPaginas">471</span>
+          </div>
+          <div class="property-pill">
+            <strong>Género:</strong> <span id="dispGenero">Realismo mágico</span>
+          </div>
+          <div class="property-pill">
+            <strong>Estado:</strong> <span id="dispDisponible" class="status-badge available">Disponible</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Barra de acciones interactivas sobre el objeto -->
+    <section class="actions-bar">
+      <button id="btnAlternarDisponibilidad" type="button">
+        Alternar Disponibilidad (Prestar/Devolver)
+      </button>
+      <button id="btnModificarAnio" type="button">
+        Actualizar Año de Edición
+      </button>
+    </section>
+
+    <!-- Inspector JSON en vivo del objeto -->
+    <section class="code-inspector">
+      <div class="inspector-title">Inspector del Objeto libro en Memoria</div>
+      <pre id="codigoJson"></pre>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

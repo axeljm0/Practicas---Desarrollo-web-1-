@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>07 - Métodos en Objetos y la palabra clave 'this'</title>
+  <style>
+    :root {
+      --primary: #0d9488;
+      --primary-hover: #0f766e;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --badge-bg: #ccfbf1;
+      --badge-text: #115e59;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 640px;
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border);
+      padding: 2rem;
+    }
+
+    header {
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    .badge {
+      display: inline-block;
+      background-color: var(--badge-bg);
+      color: var(--badge-text);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 9999px;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    p.description {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+
+    .car-dashboard {
+      background: #f0fdfa;
+      border: 1px solid #99f6e4;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    .car-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .car-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #134e4a;
+      margin-bottom: 0.5rem;
+    }
+
+    .car-description-box {
+      background: #ffffff;
+      border: 1px solid #ccfbf1;
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 1rem;
+      color: #0f766e;
+      font-style: italic;
+      margin: 1rem 0;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gauges {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    .gauge-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem;
+    }
+
+    .gauge-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .gauge-value {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 0.25rem;
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+      .actions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    button {
+      background-color: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    button.secondary {
+      background-color: #64748b;
+    }
+
+    button.secondary:hover {
+      background-color: #475569;
+    }
+
+    .explanation-card {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .explanation-title {
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .explanation-card code {
+      background: #e2e8f0;
+      padding: 0.15rem 0.35rem;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Contenedor principal -->
+  <main class="container">
+    <header>
+      <span class="badge">Módulo 6.3 · Objetos</span>
+      <h1>Ejercicio 07: Métodos en Objetos y palabra clave 'this'</h1>
+      <p class="description">
+        Invocación del método <code>descripcion()</code> en un objeto literal y uso de <code>this</code> para acceder a sus propiedades internas en tiempo de ejecución.
+      </p>
+    </header>
+
+    <!-- Tablero de control del objeto vehiculo -->
+    <section class="car-dashboard">
+      <div class="car-icon">🚗</div>
+      <h2 class="car-title">Vehículo Inteligente</h2>
+
+      <!-- Salida en pantalla del método descripcion() -->
+      <div class="car-description-box" id="cajaDescripcion">
+        Cargando descripción...
+      </div>
+
+      <!-- Indicadores de estado -->
+      <div class="gauges">
+        <div class="gauge-card">
+          <div class="gauge-label">Estado del Motor</div>
+          <div class="gauge-value" id="dispMotor">Apagado</div>
+        </div>
+        <div class="gauge-card">
+          <div class="gauge-label">Velocímetro</div>
+          <div class="gauge-value" id="dispVelocidad">0 km/h</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Botones que disparan métodos del objeto -->
+    <section class="actions-grid">
+      <button id="btnObtenerDescripcion" type="button">
+        Llamar a vehiculo.descripcion()
+      </button>
+      <button id="btnAlternarMotor" type="button" class="secondary">
+        Alternar Motor (Encender/Apagar)
+      </button>
+      <button id="btnAcelerar" type="button">
+        Llamar a vehiculo.acelerar() (+20 km/h)
+      </button>
+      <button id="btnFrenar" type="button" class="secondary">
+        Llamar a vehiculo.frenar() (0 km/h)
+      </button>
+    </section>
+
+    <!-- Guía didáctica sobre la palabra clave 'this' -->
+    <section class="explanation-card">
+      <div class="explanation-title">¿Cómo funciona 'this' en un método?</div>
+      <p>
+        Cuando se invoca <code>vehiculo.descripcion()</code>, la palabra clave <code>this</code> apunta automáticamente al objeto que se encuentra a la izquierda del punto (en este caso, <code>vehiculo</code>). De este modo, <code>this.marca</code> accede a la propiedad <code>marca</code> de ese objeto en concreto.
+      </p>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
